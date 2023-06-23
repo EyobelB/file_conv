@@ -11,3 +11,4 @@ To-do:
     e. Repeat steps a-c for mp3.go
     e. Create a conversion.go file to run the conversion process
     f. Create a main.go file to run the user interface and reference other files
+    g. Update the Makefile so that each file is individually compiled, and then linked in final step (to minimize compile time)
