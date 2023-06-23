@@ -1,0 +1,10 @@
+Current progress:
+    1. Created constructors for data frames, metadata, and the flac audio object
+    2. Isolated the magic number and displayed it
+
+To-do:
+    a. Print out any Vorbis comment strings
+    b. Create frames and store them in the frame array object
+    c. Start creating the constructs for MP3 files in mp3.go
+    d. Create a conversion.go file to run the conversion process
+    e. Create a main.go file to run the user interface and reference other files
