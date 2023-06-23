@@ -1,8 +1,8 @@
-Current progress:
+#Current progress:
     1. Created constructors for data frames, metadata, and the flac audio object
     2. Isolated the magic number and displayed it
 
-To-do:
+#To-do:
     a. Make existing code OS agnostic (for example, use OS file separators instead of defaulting to forward slashes)
     b. Print out any Vorbis comment strings/metadata
     c. Print out a frame formatted in a readable way (to confirm ability)
