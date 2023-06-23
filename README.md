@@ -1,10 +1,10 @@
 # file_conv
 Multithreaded File Converter Practice for Learning Go \
-\
+
 ## Current progress:
     1. Created constructors for data frames, metadata, and the flac audio object\
     2. Isolated the magic number and displayed it\
-\
+
 ## To-do:
     a. Make existing code OS agnostic (for example, use OS file separators instead of defaulting to forward slashes)\
     b. Print out any Vorbis comment strings/metadata\
