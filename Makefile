@@ -15,7 +15,7 @@ ifeq ($(PROCESSOR_ARCHITECTURE),x86_64)
 else ifeq ($(OS),x86)
 	ARCHFLAG := 386
 else
-	ARCHFLAG := arm
+	ARCHFLAG := arm64
 endif
 
 all:
