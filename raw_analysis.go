@@ -7,8 +7,8 @@ import (
 
 func main() {
 	fmt.Println("Testing... 1, 2, 3....")
-	raw_file, file_error := os.Open("../src/francis_forever.raw")
-	raw_info, file_info_error := os.Stat("../src/francis_forever.raw")
+	raw_file, file_error := os.Open("src/francis_forever.flac")
+	raw_info, file_info_error := os.Stat("src/francis_forever.flac")
 	if file_error != nil {
 		fmt.Println("File read error....")
 	}
@@ -23,7 +23,7 @@ func main() {
 	fmt.Println("Size: ", len, " bytes....")
 	for i, byte_val := range byte_array {
 		fmt.Printf("%08b\n", byte_val)
-		if i == 400 {
+		if i == 3 {
 			break
 		}
 	}
