@@ -1,0 +1,5 @@
+# Any files in the source folder that aren't the readme.txt should be ignored
+src/
+pkg/
+.vscode/
+go.work.sum

@@ -1,21 +1,33 @@
-OSFLAG := linux
-ARCHFLAG := amd64
-
-
 ifeq ($(OS),Windows_NT)
-	OSFLAG := windows
-else ifeq ($(OS),Darwin)
-	OSFLAG := darwin
+    OSFLAG := windows
+    ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
+        ARCHFLAG := -D amd64
+    else
+        ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+            ARCHFLAG := amd64
+        endif
+        ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+            ARCHFLAG := 386
+        endif
+    endif
 else
-	OSFLAG := linux
-endif
-
-ifeq ($(PROCESSOR_ARCHITECTURE),x86_64)
-	ARCHFLAG := amd64
-else ifeq ($(OS),x86)
-	ARCHFLAG := 386
-else
-	ARCHFLAG := arm64
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        OSFLAG := linux
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        OSFLAG := darwin
+    endif
+    UNAME_P := $(shell uname -p)
+    ifeq ($(UNAME_P),x86_64)
+        ARCHFLAG := amd64
+    endif
+    ifneq ($(filter %86,$(UNAME_P)),)
+        ARCHFLAG := 386
+    endif
+    ifneq ($(filter aarch64%,$(UNAME_P)),)
+        ARCHFLAG := arm64
+    endif
 endif
 
 all:

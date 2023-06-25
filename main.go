@@ -1,7 +1,7 @@
 package main
 
 import (
-	"file/audio"
+	audio "audio_conv"
 	"fmt"
 	"os"
 )
@@ -21,6 +21,6 @@ func main() {
 	fmt.Printf("Magic number: %s\n", francis_flac.MagicNumber())
 	fmt.Println("Raw byte data: ", francis_flac.MagicNumber())
 	fmt.Printf("File is a valid .flac? %t\n", francis_flac.ValidFlac())
-	fmt.Println("Metadata incoming....")
-	francis_flac.PrintMetadata()
+	// fmt.Println("Metadata incoming....")
+	// francis_flac.PrintMetadata()
 }
