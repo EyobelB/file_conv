@@ -34,4 +34,4 @@ MAKEPATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAIN := $(patsubst %/,%,$(dir $(MAKEPATH)))/main
 
 all:
-	cd main; GOOS=$(OSFLAG) GOARCH=$(ARCHFLAG) go build -o ../bin/file_conv
+	cd main; GOOS=$(OSFLAG) GOARCH=$(ARCHFLAG) go build -o ../file_conv
