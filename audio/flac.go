@@ -92,50 +92,50 @@ func NewFlac(audio os.File) *flac {
 		flac.isFlac = false
 	}
 
-	// Define metadata blocks
-	isHeader := 0
-	bytes_remaining := 0
-	var metadata_bytes []uint8
-	for byte_index, bytes := range flac.full_file {
-		if byte_index < 4 {
-			continue
-		}
-		// Read one byte at a time to construct metadata blocks
-		if isHeader < 4 {
-			metadata_bytes = append(metadata_bytes, bytes)
-			isHeader++
-		}
+	// // Define metadata blocks
+	// isHeader := 0
+	// bytes_remaining := 0
+	// var metadata_bytes []uint8
+	// for byte_index, bytes := range flac.full_file {
+	// 	if byte_index < 4 {
+	// 		continue
+	// 	}
+	// 	// Read one byte at a time to construct metadata blocks
+	// 	if isHeader < 4 {
+	// 		metadata_bytes = append(metadata_bytes, bytes)
+	// 		isHeader++
+	// 	}
 
-		// If we hit 4 bytes, reset the metadata. If this is the last block, exit
-		if isHeader == 4 {
-			// Save the data, isVorbis, and isLast parts of metadata
-			fmt.Println(metadata_bytes[3])
-			data_len_string := fmt.Sprintf("%d%d%d", metadata_bytes[1], metadata_bytes[2], metadata_bytes[3])
-			fmt.Println(data_len_string)
-			data_len_val, data_len_err := strconv.Atoi(data_len_string)
-			if data_len_err != nil {
-				panic(data_len_err)
-			}
-			bytes_remaining = data_len_val
-		}
+	// 	// If we hit 4 bytes, reset the metadata. If this is the last block, exit
+	// 	if isHeader == 4 {
+	// 		// Save the data, isVorbis, and isLast parts of metadata
+	// 		fmt.Println(metadata_bytes[3])
+	// 		data_len_string := fmt.Sprintf("%d%d%d", metadata_bytes[1], metadata_bytes[2], metadata_bytes[3])
+	// 		fmt.Println(data_len_string)
+	// 		data_len_val, data_len_err := strconv.Atoi(data_len_string)
+	// 		if data_len_err != nil {
+	// 			panic(data_len_err)
+	// 		}
+	// 		bytes_remaining = data_len_val
+	// 	}
 
-		if isHeader == 4 && bytes_remaining != 0 {
-			metadata_bytes = append(metadata_bytes, bytes)
-			bytes_remaining--
-		}
-		// Create block
-		if bytes_remaining == 0 && isHeader == 4 {
-			fmt.Println(metadata_bytes)
-			metadata_block := NewMetadata(metadata_bytes)
-			flac.metadata_blocks = append(flac.metadata_blocks, *metadata_block)
-			if metadata_block.isLast {
-				break
-			}
-			metadata_bytes = nil
-			isHeader = 0
-		}
+	// 	if isHeader == 4 && bytes_remaining != 0 {
+	// 		metadata_bytes = append(metadata_bytes, bytes)
+	// 		bytes_remaining--
+	// 	}
+	// 	// Create block
+	// 	if bytes_remaining == 0 && isHeader == 4 {
+	// 		fmt.Println(metadata_bytes)
+	// 		metadata_block := NewMetadata(metadata_bytes)
+	// 		flac.metadata_blocks = append(flac.metadata_blocks, *metadata_block)
+	// 		if metadata_block.isLast {
+	// 			break
+	// 		}
+	// 		metadata_bytes = nil
+	// 		isHeader = 0
+	// 	}
 
-	}
+	// }
 	// // Indicate the beginning of stream blocks
 	// var non_stream_blocks int
 	// non_stream_blocks = 4 + len(flac.metadata_blocks)
