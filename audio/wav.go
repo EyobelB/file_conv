@@ -77,6 +77,9 @@ func NewFmt(subframe []uint8) *fmt_chunk {
 
 	// Initialize sample rate
 	fmt_obj.sample_rate, conv_err = strconv.Atoi(fmt.Sprintf("%d", subframe[file_seek:file_seek+4]))
+	if conv_err != nil {
+		panic("Error converting value to integer")
+	}
 	file_seek += 4
 
 	// Grab the byte rate, AKA sample rate * channel count * bytesPerSample
@@ -144,7 +147,7 @@ func NewData(subframe []uint8) *data_chunk {
 
 func NewWav(audio os.File) *wav {
 	// Load in the audio file
-	wav_obj = wav{audio: audio}
+	wav_obj := wav{audio: audio}
 
 	// Load file as a byte array
 	var read_error error
@@ -167,12 +170,16 @@ func NewWav(audio os.File) *wav {
 	}
 
 	// Determine length of the wav file
-	wav_obj.wav_len = int(fmt.Sprintf("%d", wav_obj.full_file[file_seek:file_seek+4]))
+	var conv_err error
+	wav_obj.wav_len, conv_err = strconv.Atoi(fmt.Sprintf("%d", wav_obj.full_file[file_seek:file_seek+4]))
+	if conv_err != nil {
+		panic("Error converting value to integer")
+	}
 	file_seek += 4
 
 	// Grab the WAVE subcategory string
 	wave_string := fmt.Sprintf("%s", wav_obj.full_file[file_seek:file_seek+4])
-	if riff_string != "WAVE" {
+	if wave_string != "WAVE" {
 		wav_obj.isWAV = false
 		panic("File not a .WAV file....")
 	} else {
@@ -181,15 +188,14 @@ func NewWav(audio os.File) *wav {
 	}
 
 	// Create the format chunk, starting with the "fmt" text
-	format = NewFmt(wav_obj.full_file[file_seek:len(wav_obj.full_file)])
+	format := NewFmt(wav_obj.full_file[file_seek:len(wav_obj.full_file)])
 	wav_obj.format = *format
 	file_seek += 24
 
 	// Create the data chunk
-	data = NewData(wav_obj.full_file[file_seek:len(wav_obj.full_file)])
+	data := NewData(wav_obj.full_file[file_seek:len(wav_obj.full_file)])
 	wav_obj.data = *data
-	file_seek = len(wav_obj.full_file)
 
 	// Return pointer to wav object
-	return &wav
+	return &wav_obj
 }
